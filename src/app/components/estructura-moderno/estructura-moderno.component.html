@@ -1,0 +1,115 @@
+<div class="card bg-warning bg-opacity-75 p-3 mt-3">
+  <h2 class="display-2">Componente Estructura Moderno</h2>
+  <hr>
+
+ <!-- ------------------------------------------- -->
+ <h3>Directiva if</h3> <!-- @if -->
+ <!-- ------------------------------------------- -->
+
+  <button class="btn btn-success mb-3" (click)="mostrar=!mostrar">
+    {{ mostrar ? 'Ocultar' : 'Mostrar' }}
+  </button>
+
+  @if (mostrar) {
+    <p class="alert alert-info">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, veritatis. Laudantium consequatur enim deserunt laboriosam, quisquam ad ipsam pariatur id.</p>
+  } @else {
+    <p class="alert alert-danger">
+      ELEMENTO REMOVIDO
+    </p>
+  }
+
+  <!-- ----------------------------------- -->
+  <h3>Directivas for</h3> <!-- @for -->
+  <!-- ----------------------------------- -->
+
+  <h4>Array de strings (en una lista)</h4>
+
+  <ul>
+    @for (alumno of alumnos; track $index; let indice = $index) {
+      <li>
+        {{ indice+1 }} - {{ alumno }}
+      </li>
+    }
+  </ul>
+
+  <button
+    class="btn btn-success my-3"
+    (click)="agregarAlumno()"
+  >
+      Agregar alumno
+  </button>
+
+  @if (alumnos.length) {
+      <h4>Array de objetos (En una lista)</h4>
+
+      <ul>
+        @for (alumno of alumnos; track $index; let i = $index) {
+          <li >
+            {{ i + 1 }} - {{ alumno.nombre }} {{ alumno.apellido }}
+          </li>
+        }
+      </ul>
+
+      <h4>Array de objetos (En una tabla)</h4>
+
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Edad</th>
+              <th scope="col">Curso</th>
+              <th scope="col">Foto</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (alumno of alumnos; track $index) {
+              <tr>
+                <th scope="row">{{alumno.nombre}}</th>
+                <td>{{alumno.apellido}}</td>
+                <td>{{alumno.edad}}</td>
+                <td>{{alumno.curso ? 'Si' : 'No' }}</td>
+                <td>
+                  <img [src]="alumno.foto" alt="foto de {{alumno.nombre}}" width="50px">
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Array de objetos (en una media object de bootstrap)</h4>
+
+      @for (alumno of alumnos; track $index; let orden = $index) {
+        <div class="d-flex alert alert-warning">
+          <div class="flex-shrink-0">
+              <img [src]="alumno.foto" alt="foto del alumno {{ alumno.nombre }}" width="200px">
+          </div>
+          <div class="flex-grow-1">
+              <h5>Alumno Nro: {{ orden + 1 }} </h5>
+              <hr>
+              <p>Nombre completo: <b>{{ alumno.nombre }} {{ alumno.apellido }}</b></p>
+              <p>Edad: <i>{{ alumno.edad }}</i></p>
+              <p>Hizo el curso: {{ alumno.curso ? 'Si':'No' }}</p>
+              <hr>
+              <button class="btn btn-danger" (click)="borrarAlumno(orden)">Borrar</button>
+          </div>
+        </div>
+      }
+
+
+      <button class="btn btn-danger" (click)="borrarTodos()">Borrar Todos</button>
+
+  } @else {
+    <p class="alert alert-danger">No se encontraron alumnos</p>
+  }
+
+
+
+
+
+
+</div>
+
+

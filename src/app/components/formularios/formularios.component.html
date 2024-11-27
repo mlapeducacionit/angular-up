@@ -1,0 +1,249 @@
+<div class="card bg-danger bg-opacity-75 p-3 mt-3">
+  <h2 class="display-2">Componente Formularios</h2>
+  <hr>
+
+  <h3>Template Driven</h3>
+  <!-- Se basa en directivas en la plantilla HTML para crear y gestionar el formulario -->
+  <!-- Que usa la caracteristicas de html. Menos seguro -->
+  <!-- https://angular.dev/guide/forms/template-driven-forms -->
+
+  <hr>
+
+  <form #loginForm="ngForm" (ngSubmit)="enviar(loginForm)">
+
+    <!-- DEBUG (nombre) -->
+    <input
+      type="button"
+      class="btn btn-info"
+      (click)="logNombreControl(nombreControl)"
+      value="Log nombreControl"
+    >
+
+    <!-- DEBUG (correo) -->
+    <input
+      type="button"
+      class="btn btn-secondary"
+      (click)="logCorreoControl(correoControl)"
+      value="Log correoControl"
+    >
+
+
+    <!-- ----------------------- -->
+    <!-- Campo nombre            -->
+    <!-- ----------------------- -->
+    <div class="mb-3">
+      <label for="lbl-nombre" class="form-label">Nombre</label>
+      <input
+        #nombreControl="ngModel"
+        type="text"
+        class="form-control"
+        id="lbl-nombre"
+        [(ngModel)]="form.nombre"
+        name="nombre"
+        required
+        minlength="4"
+      >
+    </div>
+
+    <!-- Mensjes de validación -->
+
+    <div *ngIf="nombreControl.errors && nombreControl.dirty && nombreControl.invalid" class="alert alert-danger">
+      <p *ngIf="nombreControl.errors['required']">Campo requerido</p>
+      <p *ngIf="nombreControl.errors['minlength']">
+        Este campo debe poseer al menos 4 caracteres. Actualmente posee {{ nombreControl.errors['minlength'].actualLength }} caracteres
+      </p>
+    </div>
+
+    <!-- ----------------------- -->
+    <!-- Campo apellido          -->
+    <!-- ----------------------- -->
+
+    <div class="mb-3">
+      <label for="lbl-apellido" class="form-label">Apellido</label>
+      <input
+        #apellidoControl="ngModel"
+        type="text"
+        class="form-control"
+        id="lbl-apellido"
+        [(ngModel)]="form.apellido"
+        name="apellido"
+        required
+        minlength="{{minimoApellido}}"
+      >
+    </div>
+
+    <!-- Mensajes de validación -->
+
+    <div *ngIf="apellidoControl.errors && apellidoControl.dirty && apellidoControl.invalid" class="alert alert-danger">
+      <p *ngIf="apellidoControl.errors['required']">Campo requerido</p>
+      <p *ngIf="apellidoControl.errors['minlength']">
+        Este campo debe poseer al menos {{minimoApellido}} caracteres. Actualmente posee {{ apellidoControl.errors['minlength'].actualLength }} caracteres
+      </p>
+    </div>
+
+    <!-- ----------------------- -->
+    <!-- Campo correo          -->
+    <!-- ----------------------- -->
+
+    <div class="mb-3">
+      <label for="lbl-correo" class="form-label">Correo</label>
+      <input
+        #correoControl="ngModel"
+        type="email"
+        class="form-control"
+        id="lbl-correo"
+        [(ngModel)]="form.correo"
+        name="correo"
+        required
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+      >
+    </div>
+
+    <!-- Mensajes de validación -->
+
+    <div *ngIf="correoControl.errors && correoControl.dirty && correoControl.invalid" class="alert alert-danger">
+      <p *ngIf="correoControl.errors['required']">Campo requerido</p>
+      <p *ngIf="correoControl.errors['pattern']">No es un correo válido</p>
+    </div>
+
+
+    <button class="btn btn-danger mt-4" [disabled]="loginForm.invalid">Enviar</button>
+
+  </form>
+
+  <hr>
+
+  <h3>Reactive Forms</h3>
+  <!-- Se basa en un modelo de programación reactiva para crear y gestionar lel formulario y se trabaja sobre la clase, no sobre el template (Las validaciones también se hacen por medio de clase) -->
+  <!-- https://angular.dev/guide/forms/reactive-forms -->
+
+  <form [formGroup]="f" (ngSubmit)="enviarRf()">
+
+    <!-- ----------------------- -->
+    <!-- Campo nombre            -->
+    <!-- ----------------------- -->
+    <div class="mb-3">
+      <label for="lbl-nombre-rf" class="form-label">Nombre</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lbl-nombre-rf"
+        name="nombre"
+        formControlName="nombre"
+      >
+    </div>
+
+    <!-- Mensajes de validación  -->
+
+    <div *ngIf="f.controls['nombre'].errors && f.controls['nombre'].dirty && f.controls['nombre'].invalid" class="alert alert-danger mt-2">
+      <p *ngIf="f.controls['nombre'].errors['required']">Campo requerido</p>
+      <p *ngIf="f.controls['nombre'].errors['minlength']">Como mínimo {{ cantidadCaracteresfRNombre }} caracteres</p>
+      <p *ngIf="f.controls['nombre'].errors['conEspacios']"> {{ f.controls['nombre'].errors['conEspacios'] }} </p>
+    </div>
+
+    <!-- ----------------------- -->
+    <!-- Campo apellido          -->
+    <!-- ----------------------- -->
+    <div class="mb-3">
+      <label for="lbl-apellido-rf" class="form-label">Apellido</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lbl-apellido-rf"
+        name="apellido"
+        formControlName="apellido"
+      >
+    </div>
+
+    <!-- ----------------------- -->
+    <!-- Campo edad              -->
+    <!-- ----------------------- -->
+    <div class="mb-3">
+      <label for="lbl-edad-rf" class="form-label">Edad</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lbl-edad-rf"
+        name="edad"
+        formControlName="edad"
+      >
+    </div>
+
+
+    <!-- ----------------------- -->
+    <!-- Grupo Contacto          -->
+    <!-- ----------------------- -->
+
+    <div formGroupName="contacto">
+
+      <!-- ----------------------- -->
+      <!-- Campo correo            -->
+      <!-- ----------------------- -->
+
+      <div class="mb-3">
+        <label for="lbl-correo-rf" class="form-label">Correo</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lbl-correo-rf"
+          name="correo"
+          formControlName="correo"
+        >
+      </div>
+
+      <!-- ----------------------- -->
+      <!-- Campo telefono          -->
+      <!-- ----------------------- -->
+
+      <div class="mb-3">
+        <label for="lbl-telefono-rf" class="form-label">telefono</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lbl-telefono-rf"
+          name="telefono"
+          formControlName="telefono"
+        >
+      </div>
+
+    </div>
+
+      <!-- ----------------------- -->
+      <!-- Campo contraseña        -->
+      <!-- ----------------------- -->
+
+      <div class="mb-3">
+        <label for="lbl-password-rf" class="form-label">Contraseña</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lbl-password-rf"
+          name="password"
+          formControlName="password"
+        >
+      </div>
+
+
+
+
+
+
+
+    <button class="btn btn-success" [disabled]="f.invalid">Enviar</button>
+
+    <hr>
+
+    <h5>Errores del campo nombre del Reactive Form</h5>
+    <pre>{{ f.controls['nombre'].errors | json }}</pre>
+
+    <h5>Datos del Reactive Form</h5>
+
+    <pre>{{ f.value | json }}</pre>
+
+
+
+  </form>
+
+
+
+</div>

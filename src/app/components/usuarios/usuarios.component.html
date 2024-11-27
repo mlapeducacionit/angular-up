@@ -1,0 +1,47 @@
+<div class="card bg-primary bg-opacity-50 p-3 mt-3">
+  <h2 class="display-2">Componente Usuarios</h2>
+  <hr>
+
+  <button
+    class="btn btn-success"
+    (click)="guardarUsuario()"
+  >
+    POST
+  </button>
+
+  <hr>
+
+  <!-- <pre> {{ usuarios | json }} </pre> -->
+
+  @for (usuario of usuarios; track $index; let orden = $index) {
+    <div class="d-flex alert alert-warning mt-3">
+      <div class="flex-shrink-0">
+        <img [src]="usuario.foto" alt="foto del  {{ usuario.nombre }}" width="200px">
+      </div>
+      <div class="flex-shrink-1 ms-3">
+        <h6>Usuario {{ orden + 1}} - ID: {{ usuario.id }} </h6>
+        <hr>
+        <p>Nombre: <b> {{usuario.nombre}} </b></p>
+        <p>Descripción: <i> {{ usuario.descripcion }} </i></p>
+        <p>Comentarios: <i> {{ usuario.comentarios }} </i></p>
+
+        <button
+          class="btn btn-warning my-3"
+          (click)="actualizarUsuario(usuario.id)"
+        >
+        PUT
+        </button>
+
+        <button
+          class="btn btn-danger my-3"
+          (click)="borrarUsuario(usuario.id)"
+        >
+          DELETE
+        </button>
+      </div>
+    </div>
+
+  }
+
+
+</div>

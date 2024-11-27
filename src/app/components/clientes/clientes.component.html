@@ -1,0 +1,33 @@
+<div class="card bg-dark bg-opacity-50 p-3 mt-3">
+  <h2 class="display-2">Componente Clientes</h2>
+  <hr>
+
+  <!-- Mostrando los parametros recibidos en la vista -->
+
+  <h3>Listado de clientes desde el servicio</h3>
+
+  <h4 class="text-danger">
+    @if (id || cat) {
+      {{ id ? ('ID: ' + id) : '' }}
+      {{ cat ? ('Categoría: ' + cat) : '' }}
+    } @else {
+      No pasaron ningún parametro
+    }
+  </h4>
+
+  <h3>Listado de clientes</h3>
+
+  <!-- Campo cliente -->
+  <input type="text" [(ngModel)]="cliente">
+  <button class="btn btn-success mb-4" (click)="agregarCliente(cliente)">
+    Agregar cliente
+  </button>
+
+  <ul>
+    @for (cliente of clientes; track $index) {
+      <li>{{ cliente }}</li>
+    }
+  </ul>
+
+
+</div>

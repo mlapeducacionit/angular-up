@@ -1,0 +1,95 @@
+<!-- .card.bg-success.bg-opacity-75.p-3.mt-3>h2.display-2{Componente Atributos}+hr -->
+<div class="card bg-success bg-opacity-75 p-3 mt-3">
+  <h2 class="display-2">Componente Atributos</h2>
+  <hr>
+
+  <h3>Listado de clientes desde el servicio</h3>
+
+  <ul>
+    @for (cliente of clientes; track $index) {
+      <li>{{ cliente }}</li>
+    }
+  </ul>
+
+  <button
+    class="btn btn-danger"
+    (click)="eliminarUltimo()"
+  >
+    Eliminar Último
+  </button>
+
+  <!-- --------------------------------------- -->
+  <!-- Directiva ngStyle (Common Module)       -->
+  <!-- --------------------------------------- -->
+   <h3>Directiva ngStyle</h3>
+
+   <button
+    class="btn btn-info mb-3"
+    (click)="estado1=!estado1"
+    >
+    Cambiar fondo a {{ estado1 ? 'dorado':'negro' }}
+   </button>
+
+  <!-- <p [ngStyle]="{
+      color: 'red',
+      backgroundColor: 'black',
+      padding: '10px'
+    }">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+  </p> -->
+  <p [ngStyle]="cambiarPropiedad(estado1)">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+  </p>
+
+  <!-- --------------------------------------- -->
+  <!-- Directiva ngClass (Common Module)       -->
+  <!-- --------------------------------------- -->
+  <h3>Directiva ngClass</h3>
+
+  <button
+    class="btn btn-dark mb-3"
+    (click)="estado2=!estado2"
+  >
+    Cambiar el fondo a {{ estado2 ? 'dark' : 'warning' }}
+  </button>
+
+  <p [ngClass]="cambiarClase(estado2, 'btn-secondary', 'btn-success')">
+    Lorem ipsum dolor sit amet.
+  </p>
+
+ <!--  <p [ngClass]="cambiarClase(estado2)">
+    Lorem ipsum dolor sit amet.
+  </p> -->
+
+  <!-- <p [ngClass]="{ btn: true, 'btn-dark': estado2, 'btn-warning': !estado2 }">
+    Lorem ipsum dolor sit amet.
+  </p> -->
+
+  <!-- <p [ngClass]="{ btn: true, 'btn-dark': false, 'btn-warning': true}">
+    Lorem ipsum dolor sit amet.
+  </p> -->
+
+  <!-- <p class="btn btn-dark">
+    Lorem ipsum dolor sit amet.
+  </p> -->
+
+  <!-- ------------------------------------ -->
+  <!-- Directivas personalizadas -->
+  <!-- ------------------------------------ -->
+  <h3>Directivas personalizadas</h3>
+
+  <p>Es la manera que tenemos en angular de interacturar y agregar lógica personalizada sobre nuestros template</p>
+  <p>Una herramienta muy podera para extender las funcionalidades para trabajar con la vista (template)</p>
+  <p>Vamos a tener que crear una clase que va a estar decorada con el docorador 'directive'</p>
+
+  <hr>
+
+  <p appResaltar="white" colorInit="blueviolet" colorTexto="pink">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, pariatur. Ut doloribus in, voluptates quasi, sit deleniti laudantium eligendi alias incidunt dolorum eius rerum architecto qui voluptatum magni soluta magnam!
+  </p>
+
+  <div appResaltar="black" colorInit="crimson" colorTexto="white">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, pariatur. Ut doloribus in, voluptates quasi, sit deleniti laudantium eligendi alias incidunt dolorum eius rerum architecto qui voluptatum magni soluta magnam!
+  </div>
+
+</div>

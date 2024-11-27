@@ -1,0 +1,123 @@
+<div class="card bg-warning bg-opacity-75 p-3 mt-3">
+  <h2 class="display-2">Componente Estructura</h2>
+  <hr>
+
+  <!-- ----------------------------------- -->
+  <h3>Directivas *ngIf</h3>
+  <!-- ----------------------------------- -->
+
+  <button class="btn btn-success mb-3" (click)="mostrar=!mostrar">
+    {{ mostrar ? 'Ocultar' : 'Mostrar' }}
+  </button>
+
+  <p *ngIf="mostrar; else oculto" class="alert alert-info">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit, veritatis. Laudantium consequatur enim deserunt laboriosam, quisquam ad ipsam pariatur id.</p>
+
+  <ng-template #oculto>
+    <p class="alert alert-danger">
+      ELEMENTO REMOVIDO
+    </p>
+  </ng-template>
+
+ <!--  <p *ngIf="!mostrar" class="alert alert-danger">
+    ELEMENTO REMOVIDO
+  </p>
+ -->
+
+  <!-- ----------------------------------- -->
+  <h3>Directivas *ngFor</h3>
+  <!-- ----------------------------------- -->
+
+  <h4>Array de strings (en una lista)</h4>
+
+  <ul>
+    <li *ngFor="let persona of personas; index as indice">
+      {{ indice+1 }} - {{ persona }}
+    </li>
+  </ul>
+
+  <!-- <ul>
+    <li>{{personas[0]}}</li>
+    <li>{{personas[1]}}</li>
+    <li>{{personas[2]}}</li>
+    <li>{{personas[3]}}</li>
+    <li>{{personas[4]}}</li>
+  </ul> -->
+
+  <button
+    class="btn btn-success my-3"
+    (click)="agregarAlumno()"
+  >
+      Agregar alumno
+  </button>
+
+  <div *ngIf="alumnos.length; else ninguno">
+    <h4>Array de objetos (En una lista)</h4>
+
+    <ul>
+      <li *ngFor="let alumno of alumnos; index as i">
+        <!-- {{ i + 1 }} - {{ alumno | json }} --> <!-- expresión > pipe > filtro -->
+        {{ i + 1 }} - {{ alumno.nombre }} {{ alumno.apellido }}
+        <!-- ! EN LA PLANTILLAS DE ANGULAR NO FUNCIONAN LOS TEMPLATE STRING -->
+        <!-- {{ `${i+1} - ${alumno.nombre} ${alumno.apellido}` }} -->
+      </li>
+    </ul>
+
+    <h4>Array de objetos (En una tabla)</h4>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Edad</th>
+            <th scope="col">Curso</th>
+            <th scope="col">Foto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let alumno of alumnos">
+            <th scope="row">{{alumno.nombre}}</th>
+            <td>{{alumno.apellido}}</td>
+            <td>{{alumno.edad}}</td>
+            <td>{{alumno.curso ? 'Si' : 'No' }}</td>
+            <td>
+              <img [src]="alumno.foto" alt="foto de {{alumno.nombre}}" width="50px">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Array de objetos (en una media object de bootstrap)</h4>
+
+    <div *ngFor="let alumno of alumnos; index as orden" class="d-flex alert alert-warning">
+      <div class="flex-shrink-0">
+          <img [src]="alumno.foto" alt="foto del alumno {{ alumno.nombre }}" width="200px">
+      </div>
+      <div class="flex-grow-1">
+          <h5>Alumno Nro: {{ orden + 1 }} </h5>
+          <hr>
+          <p>Nombre completo: <b>{{ alumno.nombre }} {{ alumno.apellido }}</b></p>
+          <p>Edad: <i>{{ alumno.edad }}</i></p>
+          <p>Hizo el curso: {{ alumno.curso ? 'Si':'No' }}</p>
+          <hr>
+          <button class="btn btn-danger" (click)="borrarAlumno(orden)">Borrar</button>
+      </div>
+    </div>
+
+    <button class="btn btn-danger" (click)="borrarTodos()">Borrar Todos</button>
+
+  </div>
+
+
+  <ng-template #ninguno>
+    <p class="alert alert-danger">No se encontraron alumnos</p>
+  </ng-template>
+
+
+
+
+
+</div>
+
